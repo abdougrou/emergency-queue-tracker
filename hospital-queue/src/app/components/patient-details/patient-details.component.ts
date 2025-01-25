@@ -21,12 +21,17 @@ export class PatientDetailsComponent {
       this.route.params.subscribe(params => {
         this.loadPatient(params['id']);
       });
-    });
+    }, { allowSignalWrites: true });
   }
 
   loadPatient(id: string) {
+    console.log("Load Patient Request Sent")
     this.hospitalService.getPatient(id).subscribe(
-      data => this.patient.set(data)
+      data => {
+        console.log("Server Respnse: ");
+        console.log(data);
+        this.patient.set(data);
+      }
     );
   }
 

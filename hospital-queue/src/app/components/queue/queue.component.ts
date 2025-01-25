@@ -19,7 +19,7 @@ export class QueueComponent {
   constructor() {
     effect(() => {
       this.loadQueue();
-    });
+    }, { allowSignalWrites: true });
   }
 
   loadQueue() {
