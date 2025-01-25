@@ -1,0 +1,29 @@
+<div class="bg-white shadow rounded-lg p-6">
+    <h2 class="text-xl font-semibold mb-4">Current Statistics</h2>
+    
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <h3 class="text-lg font-medium mb-2">Category Breakdown</h3>
+        @for (category of categories; track category) {
+          <div class="mb-2">
+            <div class="flex justify-between text-sm">
+              <span>CTAS {{category}}</span>
+              <span>{{stats()?.categoryBreakdown[category] || 0}}</span>
+            </div>
+          </div>
+        }
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-medium mb-2">Average Wait Times</h3>
+        @for (category of categories; track category) {
+          <div class="mb-2">
+            <div class="flex justify-between text-sm">
+              <span>CTAS {{category}}</span>
+              <span>{{stats()?.averageWaitTimes[category] || 0}} min</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
