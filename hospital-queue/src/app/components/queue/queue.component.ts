@@ -29,7 +29,7 @@ export class QueueComponent {
   }
 
   getTriageClass(category: number): string {
-    const classes = {
+    const classes: { [key: number]: string } = {
       1: 'bg-blue-100 text-blue-800',
       2: 'bg-red-100 text-red-800',
       3: 'bg-yellow-100 text-yellow-800',

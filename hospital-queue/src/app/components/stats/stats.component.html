@@ -8,7 +8,7 @@
           <div class="mb-2">
             <div class="flex justify-between text-sm">
               <span>CTAS {{category}}</span>
-              <span>{{stats()?.categoryBreakdown[category] || 0}}</span>
+              <span>{{stats()?.categoryBreakdown![category] || 0}}</span>
             </div>
           </div>
         }
@@ -20,7 +20,7 @@
           <div class="mb-2">
             <div class="flex justify-between text-sm">
               <span>CTAS {{category}}</span>
-              <span>{{stats()?.averageWaitTimes[category] || 0}} min</span>
+              <span>{{stats()?.averageWaitTimes![category] || 0}} min</span>
             </div>
           </div>
         }

@@ -1,1 +1,37 @@
-<p>patient-details works!</p>
+<div class="container mx-auto p-4">
+    @if (patient()) {
+      <div class="bg-white shadow rounded-lg p-6">
+        <div class="mb-6">
+          <button routerLink="/queue" class="text-blue-600">&larr; Back to Queue</button>
+        </div>
+        
+        <h1 class="text-2xl font-bold mb-4">Patient Details</h1>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="mb-2"><strong>ID:</strong> {{patient()?.id}}</p>
+            <p class="mb-2"><strong>Arrival Time:</strong> {{patient()?.arrival_time | date:'medium'}}</p>
+            <p class="mb-2"><strong>Wait Time:</strong> {{patient()?.time_elapsed}} minutes</p>
+          </div>
+          
+          <div>
+            <p class="mb-2"><strong>Triage Category:</strong> 
+              <span [class]="getTriageClass(patient()?.triage_category || 0)">
+                CTAS {{patient()?.triage_category}}
+              </span>
+            </p>
+            <p class="mb-2"><strong>Current Phase:</strong> {{patient()?.status?.current_phase}}</p>
+            <p class="mb-2"><strong>Queue Position:</strong> #{{patient()?.queue_position?.global}}</p>
+          </div>
+        </div>
+
+        @if (patient()?.status?.investigations) {
+          <div class="mt-6">
+            <h2 class="text-xl font-semibold mb-2">Investigations</h2>
+            <p class="mb-2"><strong>Labs:</strong> {{patient()?.status?.investigations?.labs}}</p>
+            <p class="mb-2"><strong>Imaging:</strong> {{patient()?.status?.investigations?.imaging}}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
