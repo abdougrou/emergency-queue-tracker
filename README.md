@@ -40,7 +40,7 @@ Before working on this project, ensure you have the following installed:
 3. Activate the virtual environment:
     - Windows:
         ```bash
-        python -m venv ifem-env
+        ifem-env\Scripts\activate
         ```
     - macOS/Linux:
         ```bash
