@@ -1,40 +1,151 @@
-<div class="mx-auto bg-[#ecf5f7] p-4">
+<div class="mx-auto bg-[#ecf5f7] h-screen p-4">
     @if (patient()) {
       <div>
         <div class="mb-6">
           <button routerLink="/" class="text-blue-600">&larr; Back</button>
         </div>
 
-        <!-- TODO: Implement Component 1 -->
-        <div class="bg-white p-4 rounded-xl my-2">
-          Component 1
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-2xl font-bold text-gray-800">Patient Dashboard</h1>
+          <div class="text-xl font-semibold text-gray-700">{{patient()?.id}}</div>
         </div>
-        <!-- Use patient()?.id to access to the patient's ID value -->
-        <!-- Use patient()?.arrival_time | date:'medium' to access to the patient's arrival time value -->
-        <!-- Use patient()?.time_elapsed to access to the patient's wait time value -->
-        <!-- Use patient()?.triage_category to access to the patient's category value -->
-        <!-- Use patient()?.queue_position?.global to access to the patient's position value -->
 
-        <!-- END COMPONENT 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <!-- Arrival Time -->
+          <div class="bg-white p-6 rounded-xl flex items-center space-x-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <div>
+              <div class="text-sm text-gray-600">Arrival Time</div>
+              <div class="text-xl font-bold">{{patient()?.arrival_time | date:'shortTime'}}</div>
+              <div class="text-sm text-gray-500">{{patient()?.arrival_time | date:'mediumDate'}}</div>
+            </div>
+          </div>
 
-        <!-- TODO: Implement Component 2 -->
-        <div class="bg-white p-4 rounded-xl my-4">
-          Component 2
+          <!-- Waiting Time -->
+          <div class="bg-white p-6 rounded-xl flex items-center space-x-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <div class="text-sm text-gray-600">Waiting Time</div>
+              <div class="text-xl font-bold">{{formatTime(patient()?.time_elapsed || 0)}}</div>
+              <div class="text-sm text-gray-500">Avg. {{formatTime(getAverageWaitTime(patient()?.triage_category || 0))}}</div>
+            </div>
+          </div>
+
+          <!-- Current Position -->
+          <div class="bg-white p-6 rounded-xl flex items-center space-x-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <div>
+              <div class="text-sm text-gray-600">Current Position</div>
+              <div class="text-xl font-bold">{{patient()?.queue_position?.global}}</div>
+            </div>
+          </div>
+
+          <!-- Emergency Category -->
+          <div class="bg-white p-6 rounded-xl flex items-center space-x-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <div>
+              <div class="text-sm text-gray-600">Triage Category</div>
+              <div class="text-xl font-bold">{{getCategoryName(patient()?.triage_category || 0)}}</div>
+              <div class="text-sm text-gray-500">{{getCategoryDescription(patient()?.triage_category || 0)}}</div>
+            </div>
+          </div>
         </div>
-        <!-- Use patient()?.status?.current_phase to access to the patient's current phase value -->
 
-        <!-- END COMPONENT 2 -->
-
-        @if (patient()?.status?.investigations) {
-        <!-- TODO: Implement Component 3 -->
-        <div class="bg-white p-4 rounded-xl my-2">
-          Component 3
-        </div>
-        <!-- Use patient()?.status?.investigations?.labs to access to the patient's current Lab value -->
-        <!-- Use patient()?.status?.investigations?.imaging to access to the patient's current Imagery value -->
-
-        <!-- END COMPONENT 3 -->
-        }
+        <!-- Triage Timeline -->
+        <div class="bg-white p-6 rounded-xl my-4">
+          <div class="mb-4">
+            <h2 class="text-lg font-semibold">Current Phase</h2>
+            <p class="text-gray-600">{{getPhaseDescription(patient()?.status?.current_phase)}}</p>
+          </div>
+        
+          <div class="relative px-4">
+            <!-- Progress Line -->
+            <div class="absolute h-0.5 bg-gray-200 top-4 left-4 right-4">
+              <div [class]="'absolute h-full bg-blue-500'" 
+                   [style.width]="getProgressWidth(patient()?.status?.current_phase)">
+              </div>
+            </div>
+          
+            <!-- Phase Points -->
+            <div class="relative z-10 flex justify-between">
+              @for (phase of phases; track phase.step) {
+                <div class="flex flex-col items-center">
+                  <div [class]="getPhasePointClass(phase.step, patient()?.status?.current_phase)" 
+                       class="w-8 h-8 rounded-full flex items-center justify-center text-sm mb-2">
+                    {{phase.step}}
+                  </div>
+                  <span class="text-xs text-gray-600 text-center w-24">{{phase.name}}</span>
+                </div>
+              }
+            </div>
+          </div>
+         </div>
+        
+        <!-- Investigation Status -->
+        <div class="bg-white p-6 rounded-xl my-4">
+          <h2 class="text-lg font-semibold mb-4">Investigations</h2>
+        
+          <div class="space-y-4">
+            <!-- Labs Status -->
+            <div class="flex items-center space-x-6">
+              <div class="flex items-center space-x-2 w-24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                <span class="font-medium">Labs</span>
+              </div>
+            
+              <div class="flex space-x-2">
+                <div [class]="getStatusClass('ordered', patient()?.status?.investigations?.labs)"
+                     class="px-4 py-1 rounded-full text-sm">
+                  Ordered
+                </div>
+                <div [class]="getStatusClass('pending', patient()?.status?.investigations?.labs)"
+                     class="px-4 py-1 rounded-full text-sm">
+                  Pending
+                </div>
+                <div [class]="getStatusClass('reported', patient()?.status?.investigations?.labs)"
+                     class="px-4 py-1 rounded-full text-sm">
+                  Reported
+                </div>
+              </div>
+            </div>
+          
+            <!-- Imaging Status -->
+            <div class="flex items-center space-x-6">
+              <div class="flex items-center space-x-2 w-24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="font-medium">Imaging</span>
+              </div>
+            
+              <div class="flex space-x-2">
+                <div [class]="getStatusClass('ordered', patient()?.status?.investigations?.imaging)"
+                     class="px-4 py-1 rounded-full text-sm">
+                  Ordered
+                </div>
+                <div [class]="getStatusClass('pending', patient()?.status?.investigations?.imaging)"
+                     class="px-4 py-1 rounded-full text-sm">
+                  Pending
+                </div>
+                <div [class]="getStatusClass('reported', patient()?.status?.investigations?.imaging)"
+                     class="px-4 py-1 rounded-full text-sm">
+                  Reported
+                </div>
+              </div>
+            </div>
+          </div>
+         </div>
         
       </div>
     }
