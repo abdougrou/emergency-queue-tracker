@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+"width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="testing.css">
+    <title>Maze Game</title>
+</head>
+
+<body>
+
+    <div class="menubar">
+        <h2
+            style="color:rgb(0, 0, 0);
+            font-family: 'Lucida Sans', 
+                         'Lucida Sans Regular', 
+                         'Lucida Grande', 
+                         'Lucida Sans Unicode', 
+                         Geneva, Verdana, sans-serif;">
+            <p></p>
+            <div>
+                <u>Navigate the Halls</u>
+                <p>Help the doctor find the way out! (use wasd)</p>
+            </div>
+        
+        </h2>
+        <div id="difficulty">
+            <button id="easy">Easy</button>
+            <button id="medium">Medium</button>
+            <button id="hard">Hard</button>
+        </div>
+            <button class="startbtn">Start</button>
+        
+    
+    
+    </div>
+
+    <div class="content">
+        <div class="msgbox"></div>
+        <div id="roof">
+            <div class="cross">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+        </div>
+        <canvas id="mazeCanvas" 
+                height="400px" width="400px">
+        </canvas>
+    </div>
+    <script src="testing.js"></script>
+</body>
+
+</html>
