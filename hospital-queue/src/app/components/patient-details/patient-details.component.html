@@ -154,6 +154,11 @@
                 class="bg-blue-500 text-white px-4 py-2 rounded">
           Play ED Maze Game
         </button>
+
+        <button [routerLink]="['/draw-game', patient()?.id]" 
+                class="bg-blue-500 text-white px-4 py-2 rounded mx-2">
+          Play Draw Game
+        </button>
        </div>
     }
   </div>
