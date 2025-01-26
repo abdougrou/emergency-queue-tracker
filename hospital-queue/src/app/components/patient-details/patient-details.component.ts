@@ -15,6 +15,14 @@ export class PatientDetailsComponent {
   private route = inject(ActivatedRoute);
   private hospitalService = inject(HospitalService);
   patient = signal<Patient | null>(null);
+  phases = [
+    { step: 1, name: 'Registered'             , description: 'Initial registration complete' },
+    { step: 2, name: 'Triaged'                , description: 'Triage assessment complete'},
+    { step: 3, name: 'Investigations Pending' , description: 'Tests/imaging ordered'},
+    { step: 4, name: 'Treatment'              , description: 'Receiving treatment'},
+    { step: 5, name: 'Admitted'               , description: 'Being admitted to hospital'},
+    { step: 6, name: 'Discharged'             , description: 'Discharge process complete'}
+  ];
 
   constructor() {
     effect(() => {
@@ -72,5 +80,40 @@ export class PatientDetailsComponent {
       5: 240   // 120-360 mins for CTAS 5
     };
     return averageTimes[category] || 0;
+  }
+
+  getPhaseDescription(phase: string = ''): string {
+    const currentPhase = this.phases.find(p => 
+      p.name.toLowerCase() === phase.toLowerCase().replace('_', ' ')
+    );
+    return currentPhase?.description || '';
+  }
+  
+  getProgressWidth(currentPhase: string = ''): string {
+    const currentStep = this.phases.findIndex(p => 
+      p.name.toLowerCase() === currentPhase.toLowerCase().replace('_', ' ')) + 1;
+    return `${(currentStep - 1) * 20}%`;
+  }
+  
+  getPhasePointClass(step: number, currentPhase: string = ''): string {
+    const currentStep = this.phases.findIndex(p => 
+      p.name.toLowerCase() === currentPhase.toLowerCase().replace('_', ' ')) + 1;
+    
+    if (step < currentStep) {
+      return 'bg-blue-500 text-white';
+    } else if (step === currentStep) {
+      return 'bg-blue-500 text-white ring-4 ring-blue-200';
+    }
+    return 'bg-gray-200 text-gray-600';
+  }
+
+  getStatusClass(status: string, currentStatus: string = ''): string {
+    const currentIndex = ['ordered', 'pending', 'reported'].indexOf(currentStatus?.toLowerCase());
+    const statusIndex = ['ordered', 'pending', 'reported'].indexOf(status);
+
+    if (statusIndex <= currentIndex) {
+      return 'bg-blue-100 text-blue-800';
+    }
+    return 'bg-gray-100 text-gray-600';
   }
 }
