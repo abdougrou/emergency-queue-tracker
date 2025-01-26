@@ -106,4 +106,14 @@ export class PatientDetailsComponent {
     }
     return 'bg-gray-200 text-gray-600';
   }
+
+  getStatusClass(status: string, currentStatus: string = ''): string {
+    const currentIndex = ['ordered', 'pending', 'reported'].indexOf(currentStatus?.toLowerCase());
+    const statusIndex = ['ordered', 'pending', 'reported'].indexOf(status);
+
+    if (statusIndex <= currentIndex) {
+      return 'bg-blue-100 text-blue-800';
+    }
+    return 'bg-gray-100 text-gray-600';
+  }
 }
