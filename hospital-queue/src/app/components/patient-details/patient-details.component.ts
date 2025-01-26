@@ -33,11 +33,8 @@ export class PatientDetailsComponent {
   }
 
   loadPatient(id: string) {
-    console.log("Load Patient Request Sent")
     this.hospitalService.getPatient(id).subscribe(
       data => {
-        console.log("Server Respnse: ");
-        console.log(data);
         this.patient.set(data);
       }
     );
