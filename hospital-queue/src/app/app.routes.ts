@@ -12,5 +12,9 @@ export const routes: Routes = [
     path: 'patient/:id',
     loadComponent: () => import('./components/patient-details/patient-details.component')
       .then(m => m.PatientDetailsComponent)
+  },
+  {
+    path: 'game/:id', 
+    loadComponent: () => import('./components/game/game.component').then(m => m.GameComponent)
   }
 ];
