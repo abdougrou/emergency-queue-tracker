@@ -1,0 +1,41 @@
+<div class="bg-[#ecf5f7] min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">ED Drawing Game</h1>
+      <div class="text-xl">{{patientId}}</div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="text-center mb-8">
+        <h2 class="text-lg font-semibold">Bored?</h2>
+        <p class="text-gray-600 mb-4">You can draw on this canvas to pass time!</p>
+        
+        <div class="centering mb-6">
+          <canvas #drawingCanvas width="800" height="500" class="border-2 border-[#4285f4] rounded-lg"></canvas>
+        </div>
+
+        <div class="flex justify-center items-center gap-4">
+          <label class="text-gray-700">Choose Pencil Color:</label>
+          <input type="color" #colorPicker (input)="updateColor($event)" value="#000000" 
+                 class="h-8 w-16 rounded cursor-pointer">
+          <button (click)="clearCanvas()" 
+                  class="px-6 py-2 bg-[#4285f4] text-white rounded-full hover:bg-blue-600">
+            Clear Canvas
+          </button>
+          <button (click)="gradeDrawing()"
+                  class="px-6 py-2 bg-[#4285f4] text-white rounded-full hover:bg-blue-600">
+            Grade my drawing
+          </button>
+        </div>
+
+        <p class="mt-4 text-lg text-[#4285f4] font-semibold">{{grade}}</p>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <a routerLink="/patient/{{patientId}}" class="text-blue-600 hover:underline">
+        &larr; Back to Dashboard
+      </a>
+    </div>
+  </div>
+</div>

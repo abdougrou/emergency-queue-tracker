@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw on the Canvas</title>
+  <style>
+    canvas {
+      border: 3px solid #50a7d3;
+      cursor: crosshair;
+      background-color: white;
+      border-radius: 10%;
+    }
+    body {
+        height: 100vh;
+        background: linear-gradient(to bottom, white 45%, #e7f8fd 45%, #e7f8fd 65%, #d3f3fe 65%) fixed;
+    }
+    .center {
+        display: flex;
+        justify-content: center;  /* Horizontally center */
+        align-items: center;      /* Vertically center */
+        height: 80vh;            /* Full viewport height */
+        margin: 0;                /* Remove default margin */
+    }
+    .centering {
+        display: flex;
+        justify-content: center;  /* Horizontally center */
+        align-items: center;      /* Vertically center */
+        margin: 0;                /* Remove default margin */
+    }
+    .container {
+        display: grid;
+        grid-template-columns: repeat(4, 100px);
+        gap: 100px;
+        justify-content: center; /* Center horizontally */
+        align-items: center;     /* Center vertically */
+        height: 40px;
+        place-items: center;
+    }
+    h1 {
+        font-size:32px;
+        font-weight: bold;
+        font-family: "Arial", sans-serif;
+        color: #50a7d3;
+        font-style: italic;
+    }
+    p {
+        font-size:20px;
+        font-weight: bold;
+        font-family: "Arial", sans-serif;
+        color: #50a7d3;
+    }
+    label{
+        font-size: 15px;
+        font-weight: bold;
+        font-family: "Arial", sans-serif;
+        color: #50a7d3;
+    }
+    input {
+        background-color: white;
+        border: 2px solid #50a7d3;
+        border-radius: 20%;
+    }
+    button {
+        background-color: #50a7d3;
+        color: white;
+        font-weight: bold;
+        border: 3px solid rgb(167, 226, 255);
+        border-radius: 20%;
+    }
+    </style>
+</head>
+<body>
+    <div class="centering">
+        <h1>Bored?</h1>
+    </div>
+    <div class="centering">
+        <p>You can draw on this canvas to pass time!</p>
+    </div>
+    <div class="centering">
+        <canvas id="drawingCanvas" width="800" height="500"></canvas>
+    </div>
+    <p></p>
+    <div class="container">
+        <label for="color">Choose Pencil Color:</label>
+        <input type="color" id="color" value="#000000">
+        <button id="clearButton">Clear Canvas</button>
+        <button type="button" onclick="grading('grading')">Grade my drawing</button>
+    </div>
+    <p></p>
+    <div class="centering">
+        <p id="grading"></p>
+    </div>
+    <script src="canvas-js.js"></script>
+    
+
+</body>
+</html>
