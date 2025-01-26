@@ -1,37 +1,41 @@
-<div class="container mx-auto p-4">
+<div class="mx-auto bg-[#ecf5f7] p-4">
     @if (patient()) {
-      <div class="bg-white shadow rounded-lg p-6">
+      <div>
         <div class="mb-6">
-          <button routerLink="/queue" class="text-blue-600">&larr; Back to Queue</button>
-        </div>
-        
-        <h1 class="text-2xl font-bold mb-4">Patient Details</h1>
-        
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <p class="mb-2"><strong>ID:</strong> {{patient()?.id}}</p>
-            <p class="mb-2"><strong>Arrival Time:</strong> {{patient()?.arrival_time | date:'medium'}}</p>
-            <p class="mb-2"><strong>Wait Time:</strong> {{patient()?.time_elapsed}} minutes</p>
-          </div>
-          
-          <div>
-            <p class="mb-2"><strong>Triage Category:</strong> 
-              <span [class]="getTriageClass(patient()?.triage_category || 0)">
-                CTAS {{patient()?.triage_category}}
-              </span>
-            </p>
-            <p class="mb-2"><strong>Current Phase:</strong> {{patient()?.status?.current_phase}}</p>
-            <p class="mb-2"><strong>Queue Position:</strong> #{{patient()?.queue_position?.global}}</p>
-          </div>
+          <button routerLink="/" class="text-blue-600">&larr; Back</button>
         </div>
 
+        <!-- TODO: Implement Component 1 -->
+        <div class="bg-white p-4 rounded-xl my-2">
+          Component 1
+        </div>
+        <!-- Use patient()?.id to access to the patient's ID value -->
+        <!-- Use patient()?.arrival_time | date:'medium' to access to the patient's arrival time value -->
+        <!-- Use patient()?.time_elapsed to access to the patient's wait time value -->
+        <!-- Use patient()?.triage_category to access to the patient's category value -->
+        <!-- Use patient()?.queue_position?.global to access to the patient's position value -->
+
+        <!-- END COMPONENT 1 -->
+
+        <!-- TODO: Implement Component 2 -->
+        <div class="bg-white p-4 rounded-xl my-4">
+          Component 2
+        </div>
+        <!-- Use patient()?.status?.current_phase to access to the patient's current phase value -->
+
+        <!-- END COMPONENT 2 -->
+
         @if (patient()?.status?.investigations) {
-          <div class="mt-6">
-            <h2 class="text-xl font-semibold mb-2">Investigations</h2>
-            <p class="mb-2"><strong>Labs:</strong> {{patient()?.status?.investigations?.labs}}</p>
-            <p class="mb-2"><strong>Imaging:</strong> {{patient()?.status?.investigations?.imaging}}</p>
-          </div>
+        <!-- TODO: Implement Component 3 -->
+        <div class="bg-white p-4 rounded-xl my-2">
+          Component 3
+        </div>
+        <!-- Use patient()?.status?.investigations?.labs to access to the patient's current Lab value -->
+        <!-- Use patient()?.status?.investigations?.imaging to access to the patient's current Imagery value -->
+
+        <!-- END COMPONENT 3 -->
         }
+        
       </div>
     }
   </div>

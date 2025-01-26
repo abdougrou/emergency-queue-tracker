@@ -18,7 +18,7 @@ export class StatsComponent {
   constructor() {
     effect(() => {
       this.loadStats();
-    });
+    }, { allowSignalWrites: true });
   }
 
   loadStats() {
