@@ -1,14 +1,13 @@
-<div class="mx-auto bg-[#ecf5f7] h-screen p-4">
+<div class="mx-auto bg-[#ecf5f7] min-h-screen max-w-screen p-4">
     @if (patient()) {
       <div>
+        <!-- Back Button & Header -->
         <div class="mb-6">
           <button routerLink="/" class="text-blue-600">&larr; Back</button>
-        </div>
-
-        <!-- Header -->
-        <div class="flex justify-between items-center mb-4">
-          <h1 class="text-2xl font-bold text-gray-800">Patient Dashboard</h1>
-          <div class="text-xl font-semibold text-gray-700">{{patient()?.id}}</div>
+          <div class="flex justify-between items-center mt-4">
+            <h1 class="text-2xl font-bold text-gray-800">Patient Dashboard</h1>
+            <div class="text-xl font-semibold text-gray-700">{{patient()?.id}}</div>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -61,13 +60,13 @@
         </div>
 
         <!-- Triage Timeline -->
-        <div class="bg-white p-6 rounded-xl my-4">
+        <div class="bg-white p-4 md:p-6 rounded-xl my-4">
           <div class="mb-4">
             <h2 class="text-lg font-semibold">Current Phase</h2>
             <p class="text-gray-600">{{getPhaseDescription(patient()?.status?.current_phase)}}</p>
           </div>
         
-          <div class="relative px-4">
+          <div class="relative px-2 md:px-4">
             <!-- Progress Line -->
             <div class="absolute h-0.5 bg-gray-200 top-4 left-4 right-4">
               <div [class]="'absolute h-full bg-blue-500'" 
@@ -80,10 +79,10 @@
               @for (phase of phases; track phase.step) {
                 <div class="flex flex-col items-center">
                   <div [class]="getPhasePointClass(phase.step, patient()?.status?.current_phase)" 
-                       class="w-8 h-8 rounded-full flex items-center justify-center text-sm mb-2">
+                       class="w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm mb-2">
                     {{phase.step}}
                   </div>
-                  <span class="text-xs text-gray-600 text-center w-24">{{phase.name}}</span>
+                  <span class="text-[10px] md:text-xs text-gray-600 text-center w-16 md:w-24">{{phase.name}}</span>
                 </div>
               }
             </div>
@@ -91,12 +90,12 @@
          </div>
         
         <!-- Investigation Status -->
-        <div class="bg-white p-6 rounded-xl my-4">
+        <div class="bg-white p-4 md:p-6 rounded-xl my-4">
           <h2 class="text-lg font-semibold mb-4">Investigations</h2>
         
           <div class="space-y-4">
             <!-- Labs Status -->
-            <div class="flex items-center space-x-6">
+            <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6">
               <div class="flex items-center space-x-2 w-24">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
@@ -106,22 +105,22 @@
             
               <div class="flex space-x-2">
                 <div [class]="getStatusClass('ordered', patient()?.status?.investigations?.labs)"
-                     class="px-4 py-1 rounded-full text-sm">
+                     class="px-3 md:px-4 py-1 rounded-full text-xs md:text-sm">
                   Ordered
                 </div>
                 <div [class]="getStatusClass('pending', patient()?.status?.investigations?.labs)"
-                     class="px-4 py-1 rounded-full text-sm">
+                     class="px-3 md:px-4 py-1 rounded-full text-xs md:text-sm">
                   Pending
                 </div>
                 <div [class]="getStatusClass('reported', patient()?.status?.investigations?.labs)"
-                     class="px-4 py-1 rounded-full text-sm">
+                     class="px-3 md:px-4 py-1 rounded-full text-xs md:text-sm">
                   Reported
                 </div>
               </div>
             </div>
           
             <!-- Imaging Status -->
-            <div class="flex items-center space-x-6">
+            <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6">
               <div class="flex items-center space-x-2 w-24">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -131,15 +130,15 @@
             
               <div class="flex space-x-2">
                 <div [class]="getStatusClass('ordered', patient()?.status?.investigations?.imaging)"
-                     class="px-4 py-1 rounded-full text-sm">
+                     class="px-3 md:px-4 py-1 rounded-full text-xs md:text-sm">
                   Ordered
                 </div>
                 <div [class]="getStatusClass('pending', patient()?.status?.investigations?.imaging)"
-                     class="px-4 py-1 rounded-full text-sm">
+                     class="px-3 md:px-4 py-1 rounded-full text-xs md:text-sm">
                   Pending
                 </div>
                 <div [class]="getStatusClass('reported', patient()?.status?.investigations?.imaging)"
-                     class="px-4 py-1 rounded-full text-sm">
+                     class="px-3 md:px-4 py-1 rounded-full text-xs md:text-sm">
                   Reported
                 </div>
               </div>

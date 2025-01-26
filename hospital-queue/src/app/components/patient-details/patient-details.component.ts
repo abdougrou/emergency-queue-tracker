@@ -16,12 +16,12 @@ export class PatientDetailsComponent {
   private hospitalService = inject(HospitalService);
   patient = signal<Patient | null>(null);
   phases = [
-    { step: 1, name: 'Registered'             , description: 'Initial registration complete' },
-    { step: 2, name: 'Triaged'                , description: 'Triage assessment complete'},
-    { step: 3, name: 'Investigations Pending' , description: 'Tests/imaging ordered'},
-    { step: 4, name: 'Treatment'              , description: 'Receiving treatment'},
-    { step: 5, name: 'Admitted'               , description: 'Being admitted to hospital'},
-    { step: 6, name: 'Discharged'             , description: 'Discharge process complete'}
+    { step: 1, name: 'Registered'             , description: 'Welcome! You are now registered in our system, and your journey toward care has begun. A nurse will soon assess your condition to ensure you receive the attention you need. Please make yourself comfortable while we prepare the next steps for you.' },
+    { step: 2, name: 'Triaged'                , description: 'You’ve been triaged by our medical team, and we’ve assigned a priority level to your care based on your condition. This helps us ensure everyone is treated efficiently and fairly. You’re in good hands—thank you for your patience as we coordinate your care.'},
+    { step: 3, name: 'Investigations Pending' , description: 'We’re conducting tests or reviewing results to better understand your condition. This step is crucial to ensuring you receive the right treatment. It may take some time, but rest assured, our team is working diligently to provide you with the best possible care.'},
+    { step: 4, name: 'Treatment'              , description: 'You’re now receiving treatment, and our medical team is focused on helping you feel better. If you have any questions or concerns, don’t hesitate to ask. Your health and comfort are our top priorities.'},
+    { step: 5, name: 'Admitted'               , description: 'You’ve been admitted to the hospital for further care and monitoring. Our team will guide you through the next steps, and your assigned care team will ensure your needs are met. We’re here to support you every step of the way.'},
+    { step: 6, name: 'Discharged'             , description: 'Great news! You’ve been discharged and are ready to continue your recovery at home. We’ll provide any instructions or follow-up information to help you stay on the path to wellness. Take care, and thank you for trusting us with your care.'}
   ];
 
   constructor() {
