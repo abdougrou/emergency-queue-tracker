@@ -1,29 +1,22 @@
 <div class="bg-white shadow rounded-lg p-6">
-    <h2 class="text-xl font-semibold mb-4">Current Statistics</h2>
-    
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <h3 class="text-lg font-medium mb-2">Category Breakdown</h3>
-        @for (category of categories; track category) {
-          <div class="mb-2">
-            <div class="flex justify-between text-sm">
-              <span>CTAS {{category}}</span>
-              <span>{{stats()?.categoryBreakdown![category] || 0}}</span>
-            </div>
-          </div>
-        }
-      </div>
-      
-      <div>
-        <h3 class="text-lg font-medium mb-2">Average Wait Times</h3>
-        @for (category of categories; track category) {
-          <div class="mb-2">
-            <div class="flex justify-between text-sm">
-              <span>CTAS {{category}}</span>
-              <span>{{stats()?.averageWaitTimes![category] || 0}} min</span>
-            </div>
-          </div>
-        }
-      </div>
+  <h2 class="text-xl font-semibold mb-4">Current Statistics</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div>
+      <h3 class="text-lg font-medium mb-4">Category Breakdown</h3>
+      <apx-chart
+        [series]="donutSeries()"
+        [chart]="{ type: 'donut', height: 350 }"
+        [labels]="donutLabels"
+        [colors]="['#2196F3', '#ED2939', '#FFC107', '#4CAF50', '#9E9E9E']"
+      ></apx-chart>
+    </div>
+    <div>
+      <h3 class="text-lg font-medium mb-4">Average Wait Times</h3>
+      <apx-chart
+        [series]="[{ data: barSeries() }]"
+        [chart]="{ type: 'bar', height: 350 }"
+        [xaxis]="{ categories: barLabels }"
+      ></apx-chart>
     </div>
   </div>
+</div>
